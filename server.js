@@ -16,13 +16,17 @@ io.on('connection', (socket) => {
   console.log('Connected', socket.id);
 
   socket.on('ready', () => {
-    console.log('Player ready', socket.id)
+    console.log('Player ready', socket.id);
 
     readPlayerCount++;
 
-    if (readPlayerCount ===2){
+    if (readPlayerCount === 2) {
       io.emit('startGame', socket.id);
     }
-  })
+  });
+
+  socket.on('paddleMove', (paddleData) => {
+    socket.broadcast.emit('paddleMove', (paddleData));
+  });
 });
 
